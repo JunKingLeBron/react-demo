@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 给一个组件提供 state 。 -->
+
+  <div id="app"></div>
+
+  <script src="./react.development.js"></script>
+  <script src="./react-dom.development.js"></script>
+  <script src="./babel.min.js"></script>
+
+  <script type="text/babel">
+
+    class Clock extends React.Component {
+      // 构造函数
+      // 如果某个组件，需要有自己的状态，那么就需要给这个组件定义 构造函数
+      // 并且还需要在 构造函数中，首先调用基础组件的构造函数，不然 this 指向会有问题。
+      // 构造函数，会接受一个参数，这个参数就是 props
+      // 定义 this.state
+      constructor (props) {
+        super(props);
+
+        // 当前组件就有了一个 date 的状态
+        this.state = {
+          date: new Date()
+        }
+      }
+
+      // 组件挂载完成
+      componentDidMount () {
+        // console.log(1);
+        setInterval(() => {
+          // this.state.date = new Date() ×
+          // react 中，修改  state, 必须使用 setState 函数
+          this.setState({
+            date: new Date()
+          })
+        }, 1000);
+      }
+
+      // 必须要有 render 函数
+      // 当组件自己的 state 或者 外部传入的 props 发生变化的时候，会执行 render 函数
+      render () {
+        console.log('我进来了么');
+        return (
+          <div>
+            <h1>Hello, world!</h1>
+            <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(
+      <Clock />,
+      document.getElementById('app')
+    )
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script src="./react.development.js"></script>
+  <script src="./react-dom.development.js"></script>
+  <script src="./babel.min.js"></script>
+
+
+  <script type="text/babel">
+    // 通过类来定义组件
+    // function Hello (props) {
+    //   // 必须return返回一些 React元素
+    //   return <h1>hello, { props.name }, { props.age }</h1>
+    // }
+
+    class Hello extends React.Component {
+      // 类的方式，必须要有render 函数，render 函数中要进行 return
+      // 类的方式，不需要主动接受 props . 而是直接绑定在了 当前组件的 实例上面的 porps 属性上
+      render () {
+        return <h1>hello, { this.props.name }, { this.props.age }</h1>
+      }
+    }
+
+
+    ReactDOM.render(
+      <Hello name="张三" age="18"></Hello>,
+      document.getElementById('app')
+    )
+
+    // 函数定义的组件与类定义的组件有什么区别
+    // 1. 函数定义的组件也叫无状态（数据）组件。
+  </script>
+</body>
+</html>

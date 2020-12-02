@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 挂载点 -->
+  <div id="app"></div>
+
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+  <script type="text/babel">
+    /**
+      ReactDOM.render() 做渲染。
+      第一个参数： 需要渲染的内容
+      第二个参数： 渲染在何处 挂载点
+    */
+
+    // 直接使用 jsx 语法浏览器不识别，需要对其进行转换。
+    ReactDOM.render(<h1>我的天</h1>, document.getElementById('app'))
+  </script>
+</body>
+</html>

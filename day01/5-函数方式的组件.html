@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script src="./react.development.js"></script>
+  <script src="./react-dom.development.js"></script>
+  <script src="./babel.min.js"></script>
+
+
+  <script type="text/babel">
+    // 通过函数来定义组件
+    function Hello (props) {
+      // 必须return返回一些 React元素
+      return <h1>hello, { props.name }, { props.age }</h1>
+    }
+
+
+    ReactDOM.render(
+      <Hello name="张三" age="18"></Hello>,
+      document.getElementById('app')
+    )
+  </script>
+</body>
+</html>

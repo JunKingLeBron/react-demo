@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script src="./react.development.js"></script>
+  <script src="./react-dom.development.js"></script>
+  <script src="./babel.min.js"></script>
+
+
+  <script type="text/babel">
+    var todos = []; // 用来遍历li的
+    var inputVal = '张三'; // input 输入框的值
+
+    function addTodo () {
+      todos.push(inputVal);
+      render();
+    }
+
+    function deleteTodo (index) {
+      todos.splice(index, 1);
+      render();
+    }
+
+    /**
+      输入框输入内容的时候，触发这个
+    */
+    function inputChange (event) {
+      console.log(event.target.value);
+      inputVal = event.target.value;
+      render();
+    }
+
+    function render() {
+      ReactDOM.render(
+        <div>
+          <input type="text" value={inputVal} onChange={inputChange} />
+          <button onClick={addTodo}>ADD</button>
+          <ul>
+            {
+              todos.map((item, index) => {
+                return (
+                  <li key={index}>
+                    { item }
+                    {
+                      // react 中如果要给方法传递参数，需要使用 bind 改变this指向的方式
+
+                      // 为什么不能用 apply, call
+                      // 因为 apply, call 都会立即执行，只有bind是返回一个新的函数
+                    }
+                    <span onClick={deleteTodo.bind(null, index)}>&times;</span>
+                  </li>
+                )
+              })
+            }
+          </ul>
+        </div>,
+
+        document.getElementById('app')
+      )
+    }
+
+    // 默认调用一次
+    render();
+
+
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 给一个组件提供 state 。 -->
+
+  <div id="app"></div>
+
+  <script src="./react.development.js"></script>
+  <script src="./react-dom.development.js"></script>
+  <script src="./babel.min.js"></script>
+
+  <script type="text/babel">
+
+    class App extends React.Component {
+      constructor (props) {
+        super(props);
+        console.log('1 - app 的 构造函数')
+
+        this.state = {
+          myName: 'app',
+          helloName: '张三'
+        }
+      }
+
+      componentWillMount () {
+        console.log('2 - app 的组件挂载之前');
+      }
+
+      componentDidMount () {
+        console.log('4 - app 的组件挂载完成');
+      }
+
+      componentWillReceiveProps () {
+        console.log('app 的props发生修改的时候触发');
+      }
+
+      shouldComponentUpdate () {
+        console.log('5 - app 的 props 或者 state 发生变化的时候触发');
+        // 注意。这个是需要做返回的。返回 true 就修改，返回 false 就不修改
+        return true;
+      }
+
+      componentWillUpdate () {
+        console.log("6 - app 更新之前, 这个完成之后，会走 render");
+      }
+
+      componentDidUpdate () {
+        console.log('8 - app 更新完成');
+      }
+
+      componentWillUnMount () {
+        console.log('app 销毁之前');
+      }
+
+
+      render () {
+        console.log('3 - 7 app 的 render')
+        return (
+          <div>
+            wo shi app { this.state.myName }
+            <button onClick={() => {
+              this.setState({
+                myName: 'app2'
+              })
+            }}>修改app组件的 myName</button>
+
+            <button onClick={() => {
+              this.setState({
+                helloName: '李四'
+              })
+            }}>修改app组件的 helloName</button>
+
+            <Hello name={this.state.helloName} />
+          </div>
+        )
+      }
+    }
+
+    class Hello extends React.Component {
+
+      componentWillReceiveProps () {
+        console.log('hello 的 props 发生变化')
+      }
+
+      shouldComponentUpdate () {
+        console.log('hello 的 props 或者 state 发生变化');
+        // return true;
+        // 5 - app 的 props 或者 state 发生变化的时候触发
+        // 6 - app 更新之前, 这个完成之后，会走 render
+        // 3 - 7 app 的 render
+        // hello 的 props 发生变化
+        // hello 的 props 或者 state 发生变化
+        // hello 的 render
+        // 8 - app 更新完成
+        return false;
+        // 5 - app 的 props 或者 state 发生变化的时候触发
+        // 6 - app 更新之前, 这个完成之后，会走 render
+        // 3 - 7 app 的 render
+        // hello 的 props 发生变化
+        // hello 的 props 或者 state 发生变化
+        // hello 的 render  ×××
+        // 8 - app 更新完成
+      }
+
+
+
+      render () {
+        console.log('hello 的 render');
+        return (
+          <h1>hello, { this.props.name }</h1>
+        )
+      }
+    }
+
+    ReactDOM.render(
+      <App />,
+      document.getElementById('app')
+    )
+
+  </script>
+</body>
+</html>

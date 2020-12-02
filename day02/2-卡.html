@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 给一个组件提供 state 。 -->
+
+  <div id="app"></div>
+
+  <script src="./react.development.js"></script>
+  <script src="./react-dom.development.js"></script>
+  <script src="./babel.min.js"></script>
+
+  <script type="text/babel">
+
+    class App extends React.Component {
+      constructor (props) {
+        super(props);
+
+        this.state = {
+          myName: 'app',
+          helloName: '张三',
+          helloAge: 18
+        }
+      }
+
+      render () {
+        return (
+          <div>
+            wo shi app { this.state.myName }
+            <button onClick={() => {
+              this.setState({
+                myName: 'app2'
+              })
+            }}>修改app组件的 myName</button>
+
+            <button onClick={() => {
+              this.setState({
+                helloName: '李四',
+                age: 20
+              })
+            }}>修改app组件的 helloName</button>
+
+            <button onClick={() => {
+              this.setState({
+                helloAge: this.state.helloAge + 1
+              })
+            }}>修改app组件的 helloAge</button>
+
+            <Hello name={this.state.helloName} age={this.state.helloAge} />
+          </div>
+        )
+      }
+    }
+
+    class Hello extends React.PureComponent {
+      constructor () {
+        super();
+
+        this.state = {
+          age: 18
+        }
+      }
+
+      // 只要props或者state发生变化，并且没有在 shouldComponentUpdate 中 return false. 那么 render 函数一起会执行
+
+      // 有些时候，我们需要主动的去阻止 render 的无用执行。
+
+      // shouldComponentUpdate
+      // nextProps 下一个props
+      // nextState 下一个state
+      // shouldComponentUpdate (nextProps, nextState) {
+      //   // 判断是不是只有 age 这个props 发生了变化，如果是，return false
+      //   // 否则 return true;
+      //   // console.log(nextProps);
+      //   // console.log(this.props);
+      //   if (this.props.age !== nextProps.age) {
+      //     return false;
+      //   }
+      //   return true;
+      // }
+
+      fn1 () {
+        this.setState({
+          age: this.state.age + 1
+        })
+      }
+
+      // shouldComponentUpdate () {
+      //   return true;
+      // }
+
+      render () {
+        console.log('hello  render');
+
+        return (
+          <div>
+            <h1>hello, { this.props.name }</h1>
+            <button onClick={this.fn1.bind(this)}>
+            }}>修改 hello 的 age</button>
+          </div>
+
+        )
+      }
+    }
+
+    ReactDOM.render(
+      <App />,
+      document.getElementById('app')
+    )
+
+  </script>
+</body>
+</html>
